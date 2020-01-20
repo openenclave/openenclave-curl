@@ -1,0 +1,9 @@
+
+enclave {
+    trusted {
+        public void enclave_run_tests();
+    };
+
+    untrusted {
+    };
+};

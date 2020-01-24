@@ -26,3 +26,18 @@ cd build
 cmake ..
 make
 ```
+
+Contributing
+------------
+
+This project welcomes contributions and suggestions. All contributions to this repository
+must adhere to the terms of the [Developer Certificate of Origin (DCO)](https://developercertificate.org/).
+
+This project follows a [Code of Conduct](docs/CodeOfConduct.md) adapted from the
+[Contributor Covenant v1.4](https://www.contributor-covenant.org).
+
+Licensing
+=========
+
+This project is released under the
+[MIT License](https://github.com/openenclave/openenclave/blob/master/LICENSE).

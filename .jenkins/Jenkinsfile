@@ -1,0 +1,43 @@
+// Copyright (c) Open Enclave SDK contributors.
+// Licensed under the MIT License.
+
+@Library("OpenEnclaveCommon") _
+oe = new jenkins.common.Openenclave()
+
+GLOBAL_TIMEOUT_MINUTES = 240
+CTEST_TIMEOUT_SECONDS = 480
+GLOBAL_ERROR = null
+
+def JenkinsHelloWorld(String label, String compiler, String build_type) {
+    stage("${label} ${compiler} SGX1FLC ${build_type}") {
+        node("${label}") {
+            timeout(GLOBAL_TIMEOUT_MINUTES) {
+                cleanWs()
+                checkout scm
+                def task = """
+                           echo 'hello world'
+                           """
+                oe.Run(compiler, task)
+            }
+        }
+    }
+}
+
+properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '90',
+                                      artifactNumToKeepStr: '180',
+                                      daysToKeepStr: '90',
+                                      numToKeepStr: '180')),
+            [$class: 'JobRestrictionProperty']])
+
+try{
+    oe.emailJobStatus('STARTED')
+    parallel "JenkinsHelloWorld  1604 Debug" :                              { JenkinsHelloWorld('ACC-1604', 'clang-7', 'Debug') },
+            "JenkinsHelloWorld  1804 Release" :                            { JenkinsHelloWorld('ACC-1804', 'gcc', 'Release') }
+} catch(Exception e) {
+    println "Caught global pipeline exception :" + e
+    GLOBAL_ERROR = e
+    throw e
+} finally {
+    currentBuild.result = (GLOBAL_ERROR != null) ? 'FAILURE' : "SUCCESS"
+    oe.emailJobStatus(currentBuild.result)
+}

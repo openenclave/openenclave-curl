@@ -31,11 +31,8 @@ properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '90',
 
 try{
     oe.emailJobStatus('STARTED')
-    parallel
-            "ACC1604 clang-7 Debug" :                              { JenkinsHelloWorld('ACC-1604', 'clang-7', 'Debug') },
-            "ACC1604 clang-7 Release" :                            { JenkinsHelloWorld('ACC-1604', 'clang-7', 'Release') },
-            "ACC1604 gcc Debug" :                                  { JenkinsHelloWorld('ACC-1604', 'gcc', 'Debug') },
-            "ACC1604 gcc Release" :                                { JenkinsHelloWorld('ACC-1604', 'gcc', 'Release') }
+    parallel "JenkinsHelloWorld  1604 Debug" :                              { JenkinsHelloWorld('ACC-1604', 'clang-7', 'Debug') },
+            "JenkinsHelloWorld  1804 Release" :                            { JenkinsHelloWorld('ACC-1804', 'gcc', 'Release') }
 } catch(Exception e) {
     println "Caught global pipeline exception :" + e
     GLOBAL_ERROR = e

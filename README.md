@@ -1,5 +1,7 @@
 # openenclave-curl
 
+[![Bors enabled](https://bors.tech/images/badge_small.svg)](https://app.bors.tech/repositories/22874)
+
 ## How to use
 
 The Open Enclave variant of libcurl has to be built as separate project, that is,

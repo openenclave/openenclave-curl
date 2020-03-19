@@ -54,6 +54,16 @@ target_link_libraries(libcurl
 
 target_sources(libcurl PRIVATE stubs_undefined.c)
 
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/curl/include DESTINATION include/oecurl)
+install(TARGETS libcurl EXPORT oecurl-config
+        ARCHIVE DESTINATION lib/oecurl 
+        INCLUDES DESTINATION include/oecurl)
+
+install(EXPORT oecurl-config 
+        DESTINATION lib/oecurl
+        NAMESPACE ${PROJECT_NAME}::
+        EXPORT_LINK_INTERFACE_LIBRARIES)
+
 export(
     TARGETS libcurl
     NAMESPACE ${PROJECT_NAME}::

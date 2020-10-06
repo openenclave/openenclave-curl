@@ -1,6 +1,9 @@
 add_custom_command(OUTPUT tests_u.h tests_u.c tests_args.h
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/../tests.edl
-    COMMAND openenclave::oeedger8r --untrusted ${CMAKE_CURRENT_SOURCE_DIR}/../tests.edl)
+    COMMAND openenclave::oeedger8r
+    --search-path ${OE_INCLUDEDIR}
+    --search-path ${OE_INCLUDEDIR}/openenclave/edl/sgx
+    --untrusted ${CMAKE_CURRENT_SOURCE_DIR}/../tests.edl)
 
 add_executable(tests.host
     host.cpp
@@ -9,4 +12,4 @@ add_executable(tests.host
 # Needed for the generated file tests_u.h
 target_include_directories(tests.host PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
-target_link_libraries(tests.host openenclave::oehostapp)
+target_link_libraries(tests.host openenclave::oehost)

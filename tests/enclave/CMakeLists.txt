@@ -1,6 +1,9 @@
 add_custom_command(OUTPUT tests_t.h tests_t.c tests_args.h
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/../tests.edl
-    COMMAND openenclave::oeedger8r --trusted ${CMAKE_CURRENT_SOURCE_DIR}/../tests.edl)
+    COMMAND openenclave::oeedger8r
+    --search-path ${OE_INCLUDEDIR}
+    --search-path ${OE_INCLUDEDIR}/openenclave/edl/sgx
+    --trusted ${CMAKE_CURRENT_SOURCE_DIR}/../tests.edl)
 
 add_executable(tests.enclave
     enclave.cpp

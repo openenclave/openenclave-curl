@@ -47,10 +47,13 @@ add_custom_target(dummy ALL DEPENDS libcurl)
 
 target_link_libraries(libcurl
     openenclave::oeenclave
+    openenclave::oecryptombedtls
     openenclave::oelibcxx
     openenclave::oehostsock
     openenclave::oehostresolver
     )
+
+target_include_directories(libcurl PUBLIC ${OE_INCLUDEDIR}/openenclave/3rdparty)
 
 target_sources(libcurl PRIVATE stubs_undefined.c)
 

@@ -11,6 +11,11 @@ cmake_policy(SET CMP0079 NEW)
 
 find_package(openenclave REQUIRED CONFIG)
 
+# openenclave crypto lib setting since version 0.13
+set(OE_CRYPTO_LIB
+    mbedtls
+    CACHE STRING "Crypto library used by enclaves.")
+
 # libcurl for use in enclaves
 set(BUILD_CURL_EXE OFF CACHE BOOL "" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
@@ -50,6 +55,7 @@ target_link_libraries(libcurl
     openenclave::oelibcxx
     openenclave::oehostsock
     openenclave::oehostresolver
+    openenclave::oecrypto${OE_CRYPTO_LIB}
     )
 
 target_sources(libcurl PRIVATE stubs_undefined.c)

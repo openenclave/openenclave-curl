@@ -1,0 +1,29 @@
+name: CMake
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install ninja
+      run: sudo apt install ninja-build
+      
+    - name: Install OpenEnclave
+      run: |
+        wget https://github.com/openenclave/openenclave/releases/download/v0.15.0/Ubuntu_1804_open-enclave_0.15.0_amd64.deb
+        sudo apt install ./Ubuntu_1804_open-enclave_0.15.0_amd64.deb
+
+    - name: Configure CMake
+      run: cmake -GNinja ..
+
+    - name: Build
+      run: ninja
